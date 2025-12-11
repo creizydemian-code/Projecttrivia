@@ -2,34 +2,39 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title> Project TrivIA</title>
-
+<title>Trivia Majotori IA</title>
 
 <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
+
 <div id="menu" class="center">
     <div class="title">Trivia IA - Majotori</div>
-    <div class="btn" onclick="startGame('Cine')">Cine</div>
-    <div class="btn" onclick="startGame('Videojuegos')">Videojuegos</div>
-    <div class="btn" onclick="startGame('Música')">Música</div>
-    <div class="btn" onclick="startGame('Ciencia')">Ciencia</div>
-    <div class="btn" onclick="startGame('Historia')">Historia</div>
-    <div class="btn" onclick="startGame('Geografía')">Geografía</div>
-    <div class="btn" onclick="startGame('Deportes')">Deportes</div>
-    <div class="btn" onclick="startGame('Literatura')">Literatura</div>
-    <div class="btn" onclick="startGame('Anime')">Anime</div>
-    <div class="btn" onclick="startGame('Tecnología')">Tecnología</div>
+
+
+    <div class="btn" onclick="selectCategory('Cine')">Cine</div>
+    <div class="btn" onclick="selectCategory('Videojuegos')">Videojuegos</div>
+    <div class="btn" onclick="selectCategory('Música')">Música</div>
+    <div class="btn" onclick="selectCategory('Ciencia')">Ciencia</div>
+    <div class="btn" onclick="selectCategory('Historia')">Historia</div>
+    <div class="btn" onclick="selectCategory('Geografía')">Geografía</div>
+    <div class="btn" onclick="selectCategory('Deportes')">Deportes</div>
+    <div class="btn" onclick="selectCategory('Literatura')">Literatura</div>
+    <div class="btn" onclick="selectCategory('Anime')">Anime</div>
+    <div class="btn" onclick="selectCategory('Tecnología')">Tecnología</div>
 </div>
 
-
-<div id="game" class="center" style="display:none;">
+<div id="game" class="center hidden">
     <div id="questionBox">Cargando pregunta…</div>
     <div id="options"></div>
 </div>
 
+<div id="resultBox" class="hidden">
+    <div id="resultText"></div>
+    <div class="btn" onclick="backToMenu()">Volver al menú</div>
+</div>
 
 <img id="character" src="https://i.imgur.com/O7p4Eet.png">
 
