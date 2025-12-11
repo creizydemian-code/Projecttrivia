@@ -5,7 +5,6 @@ function selectCategory(category) {
     startGame(category);
 }
 
-
 async function startGame(category) {
     const questionBox = document.getElementById("questionBox");
     const optionsBox = document.getElementById("options");
@@ -15,29 +14,27 @@ async function startGame(category) {
 
     const text = await pedirPregunta(category);
 
-
     const pregunta = text.match(/Pregunta:(.*)/i)?.[1]?.trim() || "Pregunta no detectada";
 
     const opciones = text
         .match(/Opciones:(.*)/i)?.[1]
         ?.trim()
         .split(/\s*[A-D]\)\s*/i)
-        .filter(o => o) 
-        || [];
+        .filter(o => o) || [];
 
     const correcta = text.match(/Respuesta correcta:(.*)/i)?.[1]?.trim() || "?";
 
 
     questionBox.textContent = pregunta;
-    questionBox.classList.add("fadeIn");
 
+   
     opciones.forEach(op => {
         const div = document.createElement("div");
         div.className = "option";
         div.textContent = op;
 
         div.onclick = () => showResult(op.includes(correcta));
-        
+
         optionsBox.appendChild(div);
     });
 }
