@@ -1,4 +1,3 @@
-
 function selectCategory(category) {
     document.getElementById("menu").classList.add("hidden");
     document.getElementById("game").classList.remove("hidden");
@@ -9,36 +8,35 @@ async function startGame(category) {
     const questionBox = document.getElementById("questionBox");
     const optionsBox = document.getElementById("options");
 
-    questionBox.innerHTML = "Cargando pregunta...";
+    questionBox.textContent = "Cargando pregunta...";
     optionsBox.innerHTML = "";
 
-    const text = await pedirPregunta(category);
+    const data = await pedirPregunta(category);
 
-    const pregunta = text.match(/Pregunta:(.*)/i)?.[1]?.trim() || "Pregunta no detectada";
+    // Decodificar HTML entities
+    const decode = text => {
+        const txt = document.createElement("textarea");
+        txt.innerHTML = text;
+        return txt.value;
+    };
 
-    const opciones = text
-        .match(/Opciones:(.*)/i)?.[1]
-        ?.trim()
-        .split(/\s*[A-D]\)\s*/i)
-        .filter(o => o) || [];
+    const pregunta = decode(data.question);
+    const correcta = decode(data.correct_answer);
+    const opciones = [...data.incorrect_answers.map(decode), correcta];
 
-    const correcta = text.match(/Respuesta correcta:(.*)/i)?.[1]?.trim() || "?";
-
+    // Mezclar opciones
+    opciones.sort(() => Math.random() - 0.5);
 
     questionBox.textContent = pregunta;
 
-   
     opciones.forEach(op => {
         const div = document.createElement("div");
         div.className = "option";
         div.textContent = op;
-
-        div.onclick = () => showResult(op.includes(correcta));
-
+        div.onclick = () => showResult(op === correcta);
         optionsBox.appendChild(div);
     });
 }
-
 
 function showResult(isCorrect) {
     const resultBox = document.getElementById("resultBox");
@@ -48,17 +46,16 @@ function showResult(isCorrect) {
     game.classList.add("hidden");
     resultBox.classList.remove("hidden");
 
+    resultBox.classList.remove("correct", "incorrect");
+
     if (isCorrect) {
         resultBox.classList.add("correct");
-        resultBox.classList.remove("incorrect");
         resultText.textContent = "✔ ¡Respuesta correcta!";
     } else {
         resultBox.classList.add("incorrect");
-        resultBox.classList.remove("correct");
-        resultText.textContent = "✘ Respuesta incorrecta...";
+        resultText.textContent = "✘ Respuesta incorrecta";
     }
 }
-
 
 function backToMenu() {
     document.location.reload();
